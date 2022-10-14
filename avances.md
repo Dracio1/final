@@ -18,3 +18,5 @@ pruebas del login
 10/10
 carga de datos del usuario al iniciar sesion
 modificacion del dashboard
+14/10
+hoy lo abriS
