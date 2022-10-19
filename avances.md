@@ -20,3 +20,7 @@ carga de datos del usuario al iniciar sesion
 modificacion del dashboard
 14/10
 hoy lo abriS
+vi un par de cosas pero no tuve tiempo para modificar bien
+18/10
+correccion del modelo de base de datos
+correccion de funciones de login y creacion de usuario

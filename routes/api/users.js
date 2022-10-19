@@ -5,6 +5,7 @@ const { check, validationResult} = require('express-validator')
 const config = require('config')
 const jwt = require('jsonwebtoken')
 const Usuario = require('../../models/Usuarios')
+const Persona = require('../../models/Personas')
 
 //@route POST api/users
 //@desc: registration route
@@ -35,22 +36,34 @@ async (req, res) => {
 
    //check user existence
     try {
-        let user = await Usuario.findOne({email})
-        if (user){ res.status(400).json({errors : [{msg: 'el usuario ya existe'}] })  }
+        let persona = await Persona.findOne({email})
+        let user  = await Persona.findOne({nick})
+        if (persona){ res.status(400).json({errors : [{msg: 'el usuario ya existe'}] })  }
+        if (user){ res.status(400).json({errors : [{msg: 'el nombre de usuario ya existe'}] })  }
         
       
-        //new instance of user mongodb document model
-        user = new Usuario({
+        //new instance of persona mongodb document model
+        persona = new Usuario({
             email,
             nombres,
-            apellidos,            
-            usuario:{tipo:'aspirante',nick,password}
+            apellidos      
+           
+        })      
+        await persona.save()
+
+        //new instance of user mongodb document model
+        user = new Usuario({
+            tipo:'aspirante'
+            ,nick
+            ,password
+            ,persona : persona.id
+
         })
 
          //encrypt passw
         const salt = await bcrypt.genSalt(10)
 
-        user.usuario.password = await bcrypt.hash(password, salt)
+        user.password = await bcrypt.hash(password, salt)
        
         await user.save()
         

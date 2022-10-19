@@ -1,6 +1,11 @@
 const  mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 const AnuncioSchema = new mongoose.Schema({
+    usuario:{
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+    },
     tipo : {
         type: String,
         required: true
@@ -17,13 +22,26 @@ const AnuncioSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    comentario : {
-        type: String
-    },
+    comentario : [{
+        texto: {type: String,},
+        usuario:{
+            type: Schema.Types.ObjectId,
+            ref: 'user'
+        }
+    }],
     reacciones : [{tipo:{
         type: String
     },
-    }],
+    usuario:{
+        type: Schema.Types.ObjectId,
+        ref: 'user'
+    },
+    fechaCreacion : {
+        type:Date,
+        default: Date.now()
+    },
+    }]
+    ,
     
 })
 

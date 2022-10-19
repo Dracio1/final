@@ -28,12 +28,12 @@ router.get('/', auth , async (req, res) => {
 router.post('/', 
 [
 check('password', '-password requerido-').exists(),
-check('email', '-debe incluir un email válido-').isEmail()
+//check('nick', '-debe incluir un email válido-').isEmail()
 ],
 async (req, res) => {
     //console.log(req. body)
-    const { email, password } = req.body
-    console.log(email,password)
+    const { nick, password } = req.body
+    console.log(nick,password)
     const errors = validationResult(req)
 
     if(!errors.isEmpty()){
@@ -42,13 +42,13 @@ async (req, res) => {
 
    //check user existence
     try {
-        let user = await User.findOne({email})
+        let user = await User.findOne({nick})
         if(!user){
             return res.status(400).json({errors : [{msg: 'user not found'}] })  
         }
         
         const isMatch = await bcrypt.compare(password, user.usuario.password)
-        console.log(user.usuario.password === password)
+        console.log(user.password === password)
         if(!isMatch){ 
             return res.status(400).json({errors : [{msg: 'las credenciales no son correctas'}] }) 
         }
