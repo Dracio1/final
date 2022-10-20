@@ -24,3 +24,6 @@ vi un par de cosas pero no tuve tiempo para modificar bien
 18/10
 correccion del modelo de base de datos
 correccion de funciones de login y creacion de usuario
+19/10
+investigacion de redux
+creacion de rutas para carreras

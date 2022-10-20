@@ -6,11 +6,11 @@ const NotasSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'user'
     },
-    usuario:{
+    materia:{
         type: Schema.Types.ObjectId,
         ref: 'Materia'
     },
-    usuario:{
+    carrera:{
         type: Schema.Types.ObjectId,
         ref: 'Carrera'
     },
@@ -18,10 +18,10 @@ const NotasSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'user'
     },
-    nota : {
+    nota : [{
         type: String,
         required: true
-    },
+    },{}],
     observaciones : {
         type: String
     },
