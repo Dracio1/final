@@ -4,14 +4,13 @@ const auth = require('../../middlewares/auth')
 const { check, validationResult} = require('express-validator')
 const config = require('config')
 const jwt = require('jsonwebtoken')
-const  bcrypt = require('bcryptjs')
 
-const User = require('../../models/Usuarios');
+router.get('/',auth,obtenerAnunciosGeneral)
 
-router.get('/',  auth, obtenerMaterias)
+router.get('/:idMateria',auth,obtenerAnunciosMateria)
 
+router.post('/',auth,nuevoAnuncio)
 
-router.post('/', [ auth, [
-    check('nombre','El nombre es obligatorio').isEmpty(),
-   
-]], nuevaMateria)
+router.put('/:idAnuncio',auth,actualizarAnuncio)
+
+router.delete('/delete/:idMateria',auth,borrarAnuncio)

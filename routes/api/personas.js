@@ -7,3 +7,5 @@ const jwt = require('jsonwebtoken')
 const  bcrypt = require('bcryptjs')
 
 const User = require('../../models/Usuarios');
+
+router.put('/:id',auth, actualizarPersona)

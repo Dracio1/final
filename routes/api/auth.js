@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken')
 const  bcrypt = require('bcryptjs')
 
 const User = require('../../models/Usuarios');
+import {login} from '../controladores/controlUsuaio.js'
 //@route GET api/auth
 //desc: test route
 //@publica
@@ -28,7 +29,7 @@ router.get('/', auth , async (req, res) => {
 router.post('/', 
 [
 check('password', '-password requerido-').exists(),
-//check('nick', '-debe incluir un email válido-').isEmail()
+check('nick', '-debe incluir un email válido-').isEmail()
 ],
 async (req, res) => {
     //console.log(req. body)
@@ -43,7 +44,6 @@ async (req, res) => {
    //check user existence
     try {
         let user = await User.findOne({nick})
-        console.log(user)
         if(!user){
             return res.status(400).json({errors : [{msg: 'user not found'}] })  
         }
