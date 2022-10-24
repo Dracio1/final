@@ -43,7 +43,7 @@ export const register = ({ nick, nombres, apellidos, email, password }) => async
     }
 }
 
-export const login = (nickname, password) => async dispatch => {
+export const login = (nick, password) => async dispatch => {
    
     const config = {
         headers: {
@@ -51,7 +51,7 @@ export const login = (nickname, password) => async dispatch => {
         }
     }
 
-    const body = JSON.stringify({nickname, password})
+    const body = JSON.stringify({nick, password})
 
     //console.info('body=>',body)
 

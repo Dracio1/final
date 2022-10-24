@@ -22,8 +22,6 @@ check('apellidos','el apellido es obligatorio')
 ],
 async (req, res) => {
     
-    console.log(req.body)
-    
     const {nick, nombres, apellidos , email, password} = req.body
 
     console.log('informacion entrante=>', nick, nombres, apellidos, email, password)
@@ -43,14 +41,14 @@ async (req, res) => {
         
       
         //new instance of persona mongodb document model
-        persona = new Usuario({
+        persona = new Persona({
             email,
             nombres,
             apellidos      
            
         })      
         await persona.save()
-
+        console.log(persona)
         //new instance of user mongodb document model
         user = new Usuario({
             tipo:'aspirante'
@@ -59,7 +57,7 @@ async (req, res) => {
             ,persona : persona.id
 
         })
-
+        console.log(user)
          //encrypt passw
         const salt = await bcrypt.genSalt(10)
 

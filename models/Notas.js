@@ -18,19 +18,29 @@ const NotasSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'user'
     },
-    nota : [{
-        type: String,
-        required: true
-    },{}],
-    observaciones : {
-        type: String
-    },
+    nota : [{calificacion:{
+            type: String,
+            required: true}
+        },
+        {documento:{
+            type: String,
+            required: true}
+        },
+        {observaciones : {
+        type: String}
+        },
+        {fechaCreacion : {
+        type:Date}
+        },
+        {fechaActualizacion : {
+            type:Date,
+            default: Date.now()}
+            }
+    ],
     
-    fechaCreacion : {
-        type:Date,
-        default: Date.now()
-    }
-    ,
+    
+    
+    
     
 })
 

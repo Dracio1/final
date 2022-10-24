@@ -7,18 +7,18 @@ import { login } from '../../actions/auth'
 const NeuLogin = ({login, isAuthenticated}) => {
     
     const [formData, setFormData] = useState({
-        email: "",
+        nick: "",
         password: ""
     })
 
-    const {email, password} = formData
+    const {nick, password} = formData
 
     const handleChange = e => setFormData({...formData, [e.target.name] : e.target.value})
 
     const handleOnSubmit = async (e) => { 
         e.preventDefault()
         //console.log('success')
-        login(email, password)
+        login(nick, password)
     }
     
     //redirect if logged in
@@ -33,10 +33,10 @@ const NeuLogin = ({login, isAuthenticated}) => {
             </div>
 
             <label>
-                <input type="email" 
-                    placeholder="correo electrónico" 
-                    name="email"
-                    value={email}
+                <input type="text" 
+                    placeholder="nombre de usuario/nickname" 
+                    name="nick"
+                    value={nick}
                     onChange={e => handleChange(e)}
                 />
             </label>

@@ -4,12 +4,12 @@ const Schema = mongoose.Schema
 const CarreraSchema = new mongoose.Schema({
     nombre:{type:String,
             required:true},
-    materias:{
+    materias:[{
         materia:{
             type: Schema.Types.ObjectId,
             ref: 'Materias'
-        },
-    }
+        }},
+    ]
 
     
 })

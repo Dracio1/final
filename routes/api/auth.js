@@ -43,6 +43,7 @@ async (req, res) => {
    //check user existence
     try {
         let user = await User.findOne({nick})
+        console.log(user)
         if(!user){
             return res.status(400).json({errors : [{msg: 'user not found'}] })  
         }
