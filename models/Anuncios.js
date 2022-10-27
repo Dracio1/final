@@ -5,11 +5,7 @@ const AnuncioSchema = new mongoose.Schema({
     usuario:{
         type: Schema.Types.ObjectId,
         ref: 'user'
-    },
-    tipo : {
-        type: String,
-        required: true
-    },
+    },    
     materia : {
         type: String,
         required: true
@@ -27,7 +23,10 @@ const AnuncioSchema = new mongoose.Schema({
         usuario:{
             type: Schema.Types.ObjectId,
             ref: 'user'
-        }
+        },fechaCreacion : {
+            type:Date,
+            default: Date.now()
+        },
     }],
     reacciones : [{tipo:{
         type: String
@@ -36,13 +35,13 @@ const AnuncioSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'user'
     },
+    
+    }]
+    ,
     fechaCreacion : {
         type:Date,
         default: Date.now()
     },
-    }]
-    ,
-    
 })
 
 module.exports = Anuncio = mongoose.model('Anuncio', AnuncioSchema)

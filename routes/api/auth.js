@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken')
 const  bcrypt = require('bcryptjs')
 
 const User = require('../../models/Usuarios');
-import {login} from '../controladores/controlUsuaio.js'
+//import {login} from '../controladores/controlUsuaio.js'
 //@route GET api/auth
 //desc: test route
 //@publica

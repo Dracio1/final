@@ -1,9 +1,9 @@
-import Persona from '../models/Personas';
-import Usuario from '../models/Usuarios';
-import {bcrypt} from 'bcryptjs';
-import { check, validationResult} from ('express-validator')
-import config from ('config')
-import jwt from ('jsonwebtoken')
+const Persona = require('../models/Personas');
+const Usuario = require('../models/Usuarios');
+const {bcrypt} = require('bcryptjs');
+const { check, validationResult} = require('express-validator')
+const config =require('config')
+const jwt = require('jsonwebtoken')
 
 const registroUsuario = async  (req, res) => {
     
@@ -60,13 +60,13 @@ const registroUsuario = async  (req, res) => {
             }
         }
 
-        jwt.sign(
+        return jwt.sign(
             payload, 
             config.get('jwtSecret'),
             {expiresIn: 3600},
             (err, token) => {
                 if(err) throw err
-                res.json({token})
+                return res.json({token})
             })
        
         /* console.log('user created')
@@ -81,4 +81,4 @@ const registroUsuario = async  (req, res) => {
    
 }
 
-export default registroUsuario
+exports.registroUsuario = registroUsuario

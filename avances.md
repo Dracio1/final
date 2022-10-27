@@ -27,3 +27,9 @@ correccion de funciones de login y creacion de usuario
 19/10
 investigacion de redux
 creacion de rutas para carreras
+21/10
+modificacion de rutas para que correspondan con las necesidades de la aplicacion
+23/10
+creacion de controladores para las distintas rutas
+27/10
+controles para anuncios, usuarios, carreras,personas, materias y comentarios

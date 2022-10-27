@@ -86,3 +86,8 @@ const eliminarCarrera = async (req,res)=>{
         res.status(500).send('server error')
     }
 }
+
+exports.obtenerCarreras = obtenerCarreras
+exports.nuevaCarrera = nuevaCarrera
+exports.editarCarrera = editarCarrera
+exports.eliminarCarrera = eliminarCarrera

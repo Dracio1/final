@@ -89,3 +89,8 @@ const eliminarMateria = async(req,res)=>{
     
     
 }
+
+
+exports.eliminarMateria= eliminarMateria
+exports.editarMateria= editarMateria
+exports.obtenerMaterias= obtenerMaterias

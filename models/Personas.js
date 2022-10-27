@@ -43,4 +43,4 @@ const PersonSchema = new mongoose.Schema({
     
 })
 
-module.exports = Person = mongoose.model('Persona', PersonSchema)
+module.exports =  mongoose.model('Persona', PersonSchema)
