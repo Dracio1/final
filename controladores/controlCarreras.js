@@ -5,12 +5,12 @@ const obtenerCarreras = async (req,res)=>{
     try{
          const carreras = await Carreras.find()
 
-        if(!carreras) return res.status(400).send('Aun no existen carreras')
+        if(!carreras) return res.send({mensaje:'Aun no existen carreras',status:1})
 
         res.json(carreras)
     }catch(error){
         console.error(err.message)
-        res.status(500).send('server error')
+        res.status(500).send({mensaje:'server error',status:1})
     }
 
    
@@ -18,13 +18,12 @@ const obtenerCarreras = async (req,res)=>{
 
 const nuevaCarrera = async (req,res)=>{
 
-
     try{
         const {nombre,materias} = {...req.body}
 
         const carreras = await Carreras.find(nombre)
     
-        if(carreras) return res.status(400).send('Ya existe una carrera con ese nombre')
+        if(carreras) return res.send({mensaje:'Ya existe una carrera con ese nombre',status:1})
     
         const carrera = new Carreras({
             nombre,materias
@@ -32,11 +31,11 @@ const nuevaCarrera = async (req,res)=>{
     
         await carrera.save()
     
-        res.json('La carrera se creó correctamente')
+        res.json({mensaje:'La carrera se creó correctamente'})
 
     }catch(error){
         console.error(err.message)
-        res.status(500).send('server error')
+        res.status(500).send({mensaje:'server error',status:1})
     }
 
    
@@ -49,7 +48,7 @@ const editarCarrera = async (req,res) =>{
 
         const carreras = await Carreras.findById(idCarrera)
     
-        if(!carreras) return res.status(400).send('La carrera no existe')
+        if(!carreras) return res.status(400).send({mensaje:'La carrera no existe',status:1})
     
         if(!nombre){
             carreras.nombre = nombre
@@ -60,10 +59,10 @@ const editarCarrera = async (req,res) =>{
     
         await carreras.save()
     
-        res.json('La carrera se editó correctamente')
+        res.json({mensaje:'La carrera se editó correctamente',status:1})
     }catch(error){
         console.error(err.message)
-        res.status(500).send('server error')
+        res.status(500).send({mensaje:'server error',status:1})
     }
         
 }
@@ -71,19 +70,18 @@ const editarCarrera = async (req,res) =>{
 const eliminarCarrera = async (req,res)=>{
     
     try{
-        const {idCarrera} = {...req.body}
+        
+        const carreras = await Carreras.findById(req.params.idCarrera)
 
-        const carreras = await Carreras.findById(idCarrera)
-
-        if(!carreras) return res.status(400).send('La carrera no existe')
+        if(!carreras) return res.send({mensaje:'La carrera no existe',status:1})
 
         await carreras.remove()
 
-        res.json('La carrera se eliminó correctamente')
+        res.json({mensaje:'La carrera se eliminó correctamente'})
 
     }catch(error){
         console.error(err.message)
-        res.status(500).send('server error')
+        res.status(500).send({mensaje:'server error',status:1})
     }
 }
 

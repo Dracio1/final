@@ -23,7 +23,7 @@ const registroUsuario = async  (req, res) => {
     try {
         let persona = await Persona.findOne({email})
         let user  = await Persona.findOne({nick})
-        if (persona){ res.status(400).json({errors : [{msg: 'el usuario ya existe'}] })  }
+        if (persona){ res.status(400).json({errors : [{mensaje: 'el usuario ya existe'}] })  }
         if (user){ res.status(400).json({errors : [{msg: 'el nombre de usuario ya existe'}] })  }
         
       
@@ -74,7 +74,7 @@ const registroUsuario = async  (req, res) => {
 
     } catch (error) {
         console.error(error.message)
-        res.status(500).send('server error')
+        return res.send({mensaje:'server error',status:1})
     }
 
     /*  res.json({msg:`user route + ${req.body.name}`}) */

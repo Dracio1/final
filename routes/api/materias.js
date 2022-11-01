@@ -8,7 +8,7 @@ const  bcrypt = require('bcryptjs')
 
 const User = require('../../models/Usuarios');
 
-router.get('/',  auth, obtenerMaterias)
+router.get('/:idCarrera',  auth, obtenerMaterias)
 
 
 router.post('/', [ auth, [

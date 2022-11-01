@@ -5,7 +5,7 @@ const editarPersona = async (req,res)=>{
 
     const persona = await Persona.find(idPersona)
 
-    if(!persona) return res.status(400).send('no se encontró la persona')
+    if(!persona) return res.send({mensaje:'no se encontró la persona',status:1})
 
     persona.nombres = nombres
     persona.apellidos = apellidos
@@ -18,7 +18,7 @@ const editarPersona = async (req,res)=>{
 
     await persona.save()
 
-    return res.status(200).send({mensaje:'Se guardaron los cambios'})
+    return res.send({mensaje:'Se guardaron los cambios'})
 
    
 }

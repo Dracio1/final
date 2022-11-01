@@ -4,7 +4,7 @@ const Persona = require('../../models/Personas');
 const Materia = require('../../models/Materias');
 const Carrera = require('../../models/Carreras');
 
-const notasAlumno = async (req,res)=>{
+const obtenerNotasAlumno = async (req,res)=>{
     
 
     try {
@@ -14,28 +14,30 @@ const notasAlumno = async (req,res)=>{
 
         if(!notas) {
             let persona  = await Persona.findById({usuario:alumno})
-            res.json(persona)
-            return res.status(200).send('No hay notas para esta materia del alumno '+persona.nombres+ ' '+ persona.apellidos )
+            
+            return res.json({mensaje:'No hay notas para esta materia del alumno '+persona.nombres+ ' '+ persona.apellidos,status:1 })
         }
+        return res.json(notas)
     } catch (error) {
         console.error(err.message)
-        res.status(500).send('server error')
+        res.json({mensaje:'server error',status:1})
     }
     
 
 }
 
-const notasMateria = async (req,res)=>{
+const obtenerNotasMateria = async (req,res)=>{
     try {
         //para consultas de profesores o administradores
-        const {usuario,materia,carrera}= {...req.body}
+        const {usuario,carrera}= {...req.body}
+        const materia = req.params
         const user  = await User.findById({usuario})
         
         if(user.tipo == 'profesor' || user.tipo == 'administrador'){
             const notas  = await Notas.find({materia,carrera})
             res.json(notas)
             if(!notas) {
-                return res.status(200).send('No hay notas para esta materia')
+                return res.send({mensaje:'No hay notas para esta materia'})
             }
         }
         
@@ -80,7 +82,7 @@ const nuevaNota = async (req,res)=>{
             await notas.save()
         }
         
-        return res.status(200).send('Nota guardada correctamente')
+        return res.send({mensaje:'Nota guardada correctamente'})
 
        
     } catch (error) {
@@ -109,7 +111,7 @@ const actualizarNota = async (req,res)=>{
 
         await notas.save()
 
-        return res.status(200).send('Nota guardada correctamente')
+        return res.send({mensaje:'Nota guardada correctamente'})
 
 
     }catch(error){
@@ -139,7 +141,7 @@ const promedioNotasMateria = async (req,res)=>{
         
     }
 
-    return sumNotas/numeroNotas
+    return res.json(sumNotas/numeroNotas)
 
 
 }
@@ -163,14 +165,14 @@ const promedioNotasAlumno = async (req,res)=>{
         
     }
 
-    return sumNotas/numeroNotas
+    return res.json(sumNotas/numeroNotas)
 
 }
 
 
 
-exports.notasAlumno = notasAlumno
-exports.notasMateria = notasMateria
+exports.obtenerNotasAlumno = obtenerNotasAlumno
+exports.obtenerNotasMateria = obtenerNotasMateria
 exports.nuevaNota = nuevaNota
 exports.actualizarNota = actualizarNota
 exports.promedioNotasMateria = promedioNotasMateria

@@ -33,3 +33,6 @@ modificacion de rutas para que correspondan con las necesidades de la aplicacion
 creacion de controladores para las distintas rutas
 27/10
 controles para anuncios, usuarios, carreras,personas, materias y comentarios
+01/11
+correcciones en mensajes emitidos por los controladores
+correcciones en controladores, recibir paramentros enviados en la ruta

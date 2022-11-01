@@ -23,13 +23,11 @@ const obtenerAnunciosMateria = async (req,res)=>{
 
     try{
     
-    const {materia} = req.body.materia
+        const anuncios = await Anuncio.find(req.params.materia)
 
-    const anuncios = await Anuncio.find(materia)
+        if(!anuncios) return res.send({mensaje:'no hay anuncios para esta materia',status:1})
 
-    if(!anuncios) return res.status(404).send({mensaje:'no hay anuncios para esta materia'})
-
-    return res.json(anuncios)
+        return res.json(anuncios)
 
     }catch(error){
         console.log(error)
@@ -66,9 +64,9 @@ const editarAnuncio = async (req,res)=>{
 
     try{
     
-    const {usuario,materia,descripcion,imagen,idAnuncio} = {...req.body}
+    const {usuario,materia,descripcion,imagen} = {...req.body}
 
-    const anuncio = await Anuncio.findById(idAnuncio)
+    const anuncio = await Anuncio.findById(req.params.idAnuncio)
     if(!anuncio) return res.status(404).send({mensaje:'no se encontró el anuncio'})
 
     anuncio.usuario = usuario
@@ -90,22 +88,22 @@ const editarAnuncio = async (req,res)=>{
 const eliminarAnuncio = async (req,res)=>{
     
     try{
-        const idAnuncio = req.body.idAnuncio
+        
         const usuario = req.body.usuario
 
-        const anuncio = await Anuncio.findById(idAnuncio)
+        const anuncio = await Anuncio.findById(req.params.idAnuncio)
 
         if(!anuncio) return res.json({mensaje:'no se encontró el anuncio',status:1})
 
         if(anuncio.usuario == usuario){
-            await usuario.remove()
+            await anuncio.remove()
             return res.send({mensaje:'Anuncio eliminado'})
         }else{
             return res.json({mensaje:'el anuncio solo puede ser eliminado por su autor',status:1})
         }
     }catch(error){
         console.log(error)
-        res.send({mensaje:'server error',status:1})
+        return res.send({mensaje:'server error',status:1})
     }
 }
 
@@ -116,3 +114,10 @@ const nuevoComentario = async (req,res)=>{
     const anuncio = await Anuncio.findById(idAnuncio)
     
 }
+
+
+exports.obtenerAnuncios = obtenerAnuncios
+exports.obtenerAnunciosMateria = obtenerAnunciosMateria
+exports.nuevoAnuncio = nuevoAnuncio
+exports.editarAnuncio = editarAnuncio
+exports.eliminarAnuncio = eliminarAnuncio
