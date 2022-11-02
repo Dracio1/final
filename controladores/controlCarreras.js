@@ -1,8 +1,14 @@
 import Carreras from '../models/Carreras'
+const { validationResult} = require('express-validator')
 
 const obtenerCarreras = async (req,res)=>{
 
     try{
+        const errores = validationResult(req)
+
+        if(!errores){
+            return res.status(400).json({ msg: errores.msg });
+        }
          const carreras = await Carreras.find()
 
         if(!carreras) return res.send({mensaje:'Aun no existen carreras',status:1})
@@ -19,6 +25,12 @@ const obtenerCarreras = async (req,res)=>{
 const nuevaCarrera = async (req,res)=>{
 
     try{
+        const errores = validationResult(req)
+
+        if(!errores){
+            return res.status(400).json({ msg: errores.msg });
+        }
+
         const {nombre,materias} = {...req.body}
 
         const carreras = await Carreras.find(nombre)
@@ -44,6 +56,12 @@ const nuevaCarrera = async (req,res)=>{
 const editarCarrera = async (req,res) =>{
 
     try{
+        const errores = validationResult(req)
+
+        if(!errores){
+            return res.status(400).json({ msg: errores.msg });
+        }
+
         const {nombre,materias,idCarrera} = {...req.body}
 
         const carreras = await Carreras.findById(idCarrera)
@@ -70,6 +88,11 @@ const editarCarrera = async (req,res) =>{
 const eliminarCarrera = async (req,res)=>{
     
     try{
+        const errores = validationResult(req)
+
+        if(!errores){
+            return res.status(400).json({ msg: errores.msg });
+        }
         
         const carreras = await Carreras.findById(req.params.idCarrera)
 

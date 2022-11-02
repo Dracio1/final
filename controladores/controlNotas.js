@@ -1,13 +1,19 @@
 const User = require('../../models/Usuarios');
 const Notas = require('../../models/Notas');
 const Persona = require('../../models/Personas');
-const Materia = require('../../models/Materias');
-const Carrera = require('../../models/Carreras');
+const { validationResult} = require('express-validator')
 
 const obtenerNotasAlumno = async (req,res)=>{
     
 
     try {
+
+        const errores = validationResult(req)
+
+        if(!errores){
+            return res.status(400).json({ msg: errores.msg });
+        }
+
         const {alumno,materia}= {...req.body}
         let notas  = await Notas.findOne({usuario:alumno,materia})
         
@@ -15,12 +21,12 @@ const obtenerNotasAlumno = async (req,res)=>{
         if(!notas) {
             let persona  = await Persona.findById({usuario:alumno})
             
-            return res.json({mensaje:'No hay notas para esta materia del alumno '+persona.nombres+ ' '+ persona.apellidos,status:1 })
+            return res.status(400).json({ msg:'No hay notas para esta materia del alumno '+persona.nombres+ ' '+ persona.apellidos,status:1 })
         }
         return res.json(notas)
     } catch (error) {
-        console.error(err.message)
-        res.json({mensaje:'server error',status:1})
+        
+        return res.status(500).json({ msg:'server error',status:1})
     }
     
 
@@ -28,6 +34,11 @@ const obtenerNotasAlumno = async (req,res)=>{
 
 const obtenerNotasMateria = async (req,res)=>{
     try {
+        const errores = validationResult(req)
+
+        if(!errores){
+            return res.status(400).json({ msg: errores.msg });
+        }
         //para consultas de profesores o administradores
         const {usuario,carrera}= {...req.body}
         const materia = req.params
@@ -37,7 +48,7 @@ const obtenerNotasMateria = async (req,res)=>{
             const notas  = await Notas.find({materia,carrera})
             res.json(notas)
             if(!notas) {
-                return res.send({mensaje:'No hay notas para esta materia'})
+                return res.status(400).json({ msg:'No hay notas para esta materia'})
             }
         }
         
@@ -51,6 +62,11 @@ const obtenerNotasMateria = async (req,res)=>{
 
 const nuevaNota = async (req,res)=>{
     try {
+        const errores = validationResult(req)
+
+        if(!errores){
+            return res.status(400).json({ msg: errores.msg });
+        }
         //para consultas de profesores o administradores
         const {usuario,profesor,calificacion,documento,observaciones,materia,carrera}= {...req.body}
 
@@ -82,12 +98,12 @@ const nuevaNota = async (req,res)=>{
             await notas.save()
         }
         
-        return res.send({mensaje:'Nota guardada correctamente'})
+        return res.json({ msg:'Nota guardada correctamente'})
 
        
     } catch (error) {
-        console.error(err.message)
-        res.status(500).send('server error')
+       
+        return res.status(500).json({ msg:'server error'})
     }
 }
 
@@ -95,15 +111,20 @@ const nuevaNota = async (req,res)=>{
 const actualizarNota = async (req,res)=>{
 
     try{
+        const errores = validationResult(req)
+
+        if(!errores){
+            return res.status(400).json({ msg: errores.msg });
+        }
         const {usuario,profesor,calificacion,documento,observaciones,materia,carrera,nota}= {...req.body}
 
         const notas = await Notas.find({nota})
 
-        if(!notas) return res.status(400).send('El alumno no tiene notas para actualizar')
+        if(!notas) return res.status(400).json({ msg:'El alumno no tiene notas para actualizar'})
 
         const documentoActualizar = notas.findIndex(nota=>nota.documento == documento)
 
-        if(!documentoActualizar) return res.status(400).send('La nota a actualizar no existe')
+        if(!documentoActualizar) return res.status(400).json({ msg:'La nota a actualizar no existe'})
 
         notas.nota[documentoActualizar].calificacion = calificacion
         notas.nota[documentoActualizar].documento = documento
@@ -111,62 +132,76 @@ const actualizarNota = async (req,res)=>{
 
         await notas.save()
 
-        return res.send({mensaje:'Nota guardada correctamente'})
+        return res.json({ msg:'Nota guardada correctamente'})
 
 
     }catch(error){
-        console.error(err.message)
-        res.status(500).send('server error')
+        
+        return res.status(500).json({ msg:'server error'})
     }
 
 
 }
 
 const promedioNotasMateria = async (req,res)=>{
-    const {materia,carrera,usuario,documento}= {...req.body}
 
-    const user = await User.find({usuario})
-    if(user.tipo == 'administrador')return res.status(400).send('no tiene permisos para esta función')
-    const notas = await Notas.find({materia,carrera})
+    try{
+        const errores = validationResult(req)
 
-    const numeroNotas = notas.length
-    let sumNotas = 0
-
-    for(i=0;i<numeroNotas;i++){
-        if(notas.nota.length != 0){
-            notas.nota.forEach(nota => {
-                if(nota.documento == documento) sumNotas += notas.nota.calificacion
-            });
+        if(!errores){
+            return res.status(400).json({ msg: errores.msg });
         }
+        const {materia,carrera,usuario,documento}= {...req.body}
+
+        const user = await User.find({usuario})
+        if(user.tipo == 'administrador')return res.status(400).json({ msg:'no tiene permisos para esta función'})
+        const notas = await Notas.find({materia,carrera})
+
+        const numeroNotas = notas.length
+        let sumNotas = 0
+
+        for(i=0;i<numeroNotas;i++){
+            if(notas.nota.length != 0){
+                notas.nota.forEach(nota => {
+                    if(nota.documento == documento) sumNotas += notas.nota.calificacion
+                });
+            }
+            
+        }
+
+        return res.json(sumNotas/numeroNotas)
+
+    }catch(error){
         
+        return res.status(500).json({ msg:'server error'})
     }
-
-    return res.json(sumNotas/numeroNotas)
-
-
 }
 
 const promedioNotasAlumno = async (req,res)=>{
-    const {carrera,alumno,usuario,documento}= {...req.body}
+    try{
+        const {carrera,alumno,usuario,documento}= {...req.body}
 
-    const user = await User.find({usuario})
-    if(user.tipo == 'administrador')return res.status(400).send('no tiene permisos para esta función')
-    const notas = await Notas.find({alumno,carrera})
-    
-    const numeroNotas = notas.length
-    let sumNotas = 0
-
-    for(i=0;i<numeroNotas;i++){
-        if(notas.nota.length != 0){
-            notas.nota.forEach(nota => {
-                if(nota.documento == documento) sumNotas += notas.nota.calificacion
-            });
-        }
+        const user = await User.find({usuario})
+        if(user.tipo == 'administrador')return res.status(400).json({ msg:'no tiene permisos para esta función'})
+        const notas = await Notas.find({alumno,carrera})
         
+        const numeroNotas = notas.length
+        let sumNotas = 0
+
+        for(i=0;i<numeroNotas;i++){
+            if(notas.nota.length != 0){
+                notas.nota.forEach(nota => {
+                    if(nota.documento == documento) sumNotas += notas.nota.calificacion
+                });
+            }
+            
+        }
+
+        return res.json(sumNotas/numeroNotas)
+    }catch(error){
+        
+        return res.status(500).json({ msg:'server error'})
     }
-
-    return res.json(sumNotas/numeroNotas)
-
 }
 
 

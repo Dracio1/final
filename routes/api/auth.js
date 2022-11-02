@@ -16,8 +16,7 @@ router.get('/', auth , async (req, res) => {
         const user = await User.findById(req.user.id).select('-password')
         res.json(user)
     } catch (error) {
-        console.error(err.message)
-        res.status(500).send('server error')
+        res.status(500).json({msg:'server error',status:1})
     }
 })
 
@@ -34,7 +33,7 @@ check('nick', '-debe incluir un email válido-').isEmail()
 async (req, res) => {
     //console.log(req. body)
     const { nick, password } = req.body
-    console.log(nick,password)
+   
     const errors = validationResult(req)
 
     if(!errors.isEmpty()){
@@ -49,7 +48,7 @@ async (req, res) => {
         }
         
         const isMatch = await bcrypt.compare(password, user.usuario.password)
-        console.log(user.password === password)
+        
         if(!isMatch){ 
             return res.status(400).json({errors : [{msg: 'las credenciales no son correctas'}] }) 
         }
@@ -75,8 +74,7 @@ async (req, res) => {
         res.json({msg:'datos correctos user creado', datos : req.body.name + req.body.email}) */
 
     } catch (error) {
-        console.error(error.message)
-        return res.status(500).send('server error')
+        res.status(500).json({msg:'server error',status:1})
     }
 
     /*  res.json({msg:`user route + ${req.body.name}`}) */

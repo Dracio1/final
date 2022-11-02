@@ -1,9 +1,15 @@
 import materias from '../models/Materias'
 import carreras from '../models/Carreras'
+const { validationResult} = require('express-validator')
 
 const obtenerMaterias = async (req,res)=>{
 
     try{
+        const errores = validationResult(req)
+
+        if(!errores){
+            return res.status(400).json({ msg: errores.msg });
+        }
        
         const Carrera = await carreras.findById(req.params.idCarrera)
         const cantidadMaterias = Carrera.materias.length
@@ -27,7 +33,12 @@ const obtenerMaterias = async (req,res)=>{
 const nuevaMateria = async(req,res)=>{
 
     try{
-        const {nombre} = {...req.body}
+        const errores = validationResult(req)
+
+        if(!errores){
+            return res.status(400).json({ msg: errores.msg });
+        }
+        const {nombre} = req.body.nombre
 
         const Carrera = await carreras.find(nombre)
 
@@ -50,9 +61,16 @@ const nuevaMateria = async(req,res)=>{
 const editarMateria = async(req,res)=>{
     
     try{
-        const {idMateria,nombre} = {...req.body}
 
-        const materia = await materias.findById(idMateria)
+        const errores = validationResult(req)
+
+        if(!errores){
+            return res.status(400).json({ msg: errores.msg });
+        }
+
+        const {nombre} = req.body.nombre
+
+        const materia = await materias.findById(req.params.idMateria)
 
         if(!materia) res.status(400).send('La materia no existe')
 
@@ -73,9 +91,14 @@ const editarMateria = async(req,res)=>{
 const eliminarMateria = async(req,res)=>{
     
     try{
-        const {idMateria} = {...req.body}
 
-        const materia = await materias.findById(idMateria)
+        const errores = validationResult(req)
+
+        if(!errores){
+            return res.status(400).json({ msg: errores.msg });
+        }
+
+        const materia = await materias.findById(req.params.idMateria)
 
         if(!materia) res.status(400).send('La materia no existe')
 
@@ -83,8 +106,8 @@ const eliminarMateria = async(req,res)=>{
 
         return res.send('La materia se eliminó correctamente')
     }catch(error){
-        console.error(err.message)
-        res.status(500).send('server error')
+        
+        return res.status(500).send('server error')
     }
     
     
@@ -94,3 +117,4 @@ const eliminarMateria = async(req,res)=>{
 exports.eliminarMateria= eliminarMateria
 exports.editarMateria= editarMateria
 exports.obtenerMaterias= obtenerMaterias
+exports.nuevaMateria= nuevaMateria

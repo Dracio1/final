@@ -1,20 +1,26 @@
 const Persona = require('../models/Personas');
 const Usuario = require('../models/Usuarios');
 const Anuncio = require('../models/Anuncios');
+const { validationResult} = require('express-validator')
 
 const obtenerAnuncios = async (req,res)=>{
 
     try{
-    
-    const anuncios = await Anuncio.find({materia: ''})
+        const errores = validationResult(req)
 
-    if(!anuncios) res.status(404).send({mensaje:'no se encontraron anuncios'})
+        if(!errores){
+            return res.status(400).json({ msg: errores.msg });
+        }
+        
+        const anuncios = await Anuncio.find({materia: ''})
 
-    res.json(anuncios)
+        if(!anuncios) return res.status(404).send({msg:'no se encontraron anuncios'})
+
+        res.json(anuncios)
 
     }catch(error){
-        console.log(error)
-        res.send({mensaje:'server error',status:1})
+        
+        res.status(500).json({msg:'server error',status:1})
     }
 
 }
@@ -22,88 +28,100 @@ const obtenerAnuncios = async (req,res)=>{
 const obtenerAnunciosMateria = async (req,res)=>{
 
     try{
-    
+        const errores = validationResult(req)
+
+        if(!errores){
+            return res.status(400).json({ msg: errores.msg });
+        }
         const anuncios = await Anuncio.find(req.params.materia)
 
-        if(!anuncios) return res.send({mensaje:'no hay anuncios para esta materia',status:1})
+        if(!anuncios) return res.status(404).send({msg:'no hay anuncios para esta materia',status:1})
 
         return res.json(anuncios)
 
     }catch(error){
-        console.log(error)
-        res.send({mensaje:'server error',status:1})
+        res.status(500).json({msg:'server error',status:1})
     }
 }
 
 const nuevoAnuncio = async(req,res)=>{
 
     try{
+        const errores = validationResult(req)
+
+        if(!errores){
+            return res.status(400).json({ msg: errores.msg });
+        }
         const {usuario,materia,descripcion,imagen} = {...req.body}
 
         const user = await Usuario.findById(usuario)
 
-        if(usuario.tipo == 'profesor'){
+        const anuncio = new Anuncio({
+            usuario
+            ,materia
+            ,descripcion
+            ,imagen
+        })
 
-            const anuncio = new Anuncio({
-                usuario
-                ,materia
-                ,descripcion
-                ,imagen
-            })
-
-            anuncio.save()
+        anuncio.save()
+        return res.json({msg:'Nuevo anuncio agregado'})
         
-        }
     }catch(error){
-        console.log(error)
-        res.send({mensaje:'server error',status:1})
+        res.status(500).json({msg:'server error',status:1})
     }
 }
 
 const editarAnuncio = async (req,res)=>{
 
     try{
-    
-    const {usuario,materia,descripcion,imagen} = {...req.body}
+        const errores = validationResult(req)
 
-    const anuncio = await Anuncio.findById(req.params.idAnuncio)
-    if(!anuncio) return res.status(404).send({mensaje:'no se encontró el anuncio'})
+        if(!errores){
+            return res.status(400).json({ msg: errores.msg });
+        }
+        const {usuario,materia,descripcion,imagen} = {...req.body}
 
-    anuncio.usuario = usuario
-    anuncio.materia = materia
-    anuncio.descripcion = descripcion
-    anuncio.imagen = imagen
+        const anuncio = await Anuncio.findById(req.params.idAnuncio)
+        if(!anuncio) return res.status(404).json({msg:'no se encontró el anuncio'})
 
-    await anuncio.save()
+        anuncio.usuario = usuario
+        anuncio.materia = materia
+        anuncio.descripcion = descripcion
+        anuncio.imagen = imagen
 
-    res.send({mensaje:'el anuncio se editó correctamente'})
+        await anuncio.save()
+
+        res.json({msg:'el anuncio se editó correctamente'})
 
 
     }catch(error){
-        console.log(error)
-        res.send({mensaje:'server error',status:1})
+        res.status(500).json({msg:'server error',status:1})
     }
 }
 
 const eliminarAnuncio = async (req,res)=>{
     
     try{
+        const errores = validationResult(req)
+
+        if(!errores){
+            return res.status(400).json({ msg: errores.msg });
+        }
         
         const usuario = req.body.usuario
 
         const anuncio = await Anuncio.findById(req.params.idAnuncio)
 
-        if(!anuncio) return res.json({mensaje:'no se encontró el anuncio',status:1})
+        if(!anuncio) return res.status(404).json({msg:'no se encontró el anuncio',status:1})
 
         if(anuncio.usuario == usuario){
             await anuncio.remove()
-            return res.send({mensaje:'Anuncio eliminado'})
+            return res.json({msg:'Anuncio eliminado'})
         }else{
-            return res.json({mensaje:'el anuncio solo puede ser eliminado por su autor',status:1})
+            return res.status(404).json({msg:'el anuncio solo puede ser eliminado por su autor',status:1})
         }
     }catch(error){
-        console.log(error)
-        return res.send({mensaje:'server error',status:1})
+        res.status(500).json({msg:'server error',status:1})
     }
 }
 

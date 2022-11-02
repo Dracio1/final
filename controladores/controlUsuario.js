@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken')
 
 const registroUsuario = async  (req, res) => {
     
-    console.log(req.body)
     
     const {nick, nombres, apellidos , email, password} = req.body
 
@@ -16,15 +15,15 @@ const registroUsuario = async  (req, res) => {
     const errors = validationResult(req)
 
     if(!errors.isEmpty()){
-            return res.status(400).json({errors :  errors.array()})
+            return res.status(400).json({msg :  errors.msg})
     }
 
    //check user existence
     try {
         let persona = await Persona.findOne({email})
         let user  = await Persona.findOne({nick})
-        if (persona){ res.status(400).json({errors : [{mensaje: 'el usuario ya existe'}] })  }
-        if (user){ res.status(400).json({errors : [{msg: 'el nombre de usuario ya existe'}] })  }
+        if (persona)return res.status(400).json({msg: 'el usuario ya existe'})
+        if (user)return res.status(400).json({msg: 'el nombre de usuario ya existe'})  
         
       
         //new instance of persona mongodb document model
@@ -73,8 +72,8 @@ const registroUsuario = async  (req, res) => {
         res.json({msg:'datos correctos user creado', datos : req.body.name + req.body.email}) */
 
     } catch (error) {
-        console.error(error.message)
-        return res.send({mensaje:'server error',status:1})
+       
+        return res.status(500).json({ msg:'server error'})
     }
 
     /*  res.json({msg:`user route + ${req.body.name}`}) */
