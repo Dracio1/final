@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const auth = require('../../middlewares/auth')
+const {auth} = require('../../middlewares/auth')
 const { check, validationResult} = require('express-validator')
 const config = require('config')
 const jwt = require('jsonwebtoken')
@@ -28,10 +28,10 @@ router.get('/', auth , async (req, res) => {
 router.post('/', 
 [
 check('password', '-password requerido-').exists(),
-check('nick', '-debe incluir un email válido-').isEmail()
+check('nick', '-debe incluir un email válido-').not().isEmpty()
 ],
 async (req, res) => {
-    //console.log(req. body)
+    console.log(req. body)
     const { nick, password } = req.body
    
     const errors = validationResult(req)

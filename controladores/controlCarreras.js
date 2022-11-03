@@ -1,4 +1,4 @@
-import Carreras from '../models/Carreras'
+const Carreras = require('../models/Carreras')
 const { validationResult} = require('express-validator')
 
 const obtenerCarreras = async (req,res)=>{

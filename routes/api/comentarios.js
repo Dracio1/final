@@ -6,8 +6,8 @@ const config = require('config')
 const jwt = require('jsonwebtoken')
 
 
-router.post('/',auth,nuevoComentario)
+//router.post('/',auth,nuevoComentario)
 
-router.put('/:id',auth,actualizarComentario)
+//router.put('/:id',auth,actualizarComentario)
 
-router.delete('/delete/:id',auth,borrarComentario)
+//router.delete('/delete/:id',auth,borrarComentario)

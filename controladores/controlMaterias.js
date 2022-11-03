@@ -1,8 +1,8 @@
-import materias from '../models/Materias'
-import carreras from '../models/Carreras'
+const {materias} = require('../models/Materias')
+const {carreras} = require('../models/Carreras')
 const { validationResult} = require('express-validator')
 
-const obtenerMaterias = async (req,res)=>{
+const obtenerMateriasCarrera = async (req,res)=>{
 
     try{
         const errores = validationResult(req)
@@ -15,9 +15,9 @@ const obtenerMaterias = async (req,res)=>{
         const cantidadMaterias = Carrera.materias.length
         let Materias = []
 
-        if(cantidadMaterias == 0) res.send({mensaje:'La carrera no tiene materias asignadas',status:1})
+        if(cantidadMaterias == 0) return res.send({mensaje:'La carrera no tiene materias asignadas',status:1})
         for(let i=0; i < cantidadMaterias;i++){
-            let materia = await materias.findById(req.params.idCarrera.materias[i].__id)
+            let materia = await materias.findById(Carrera.materias[i].__id)
             Materias.push(materia)
         }
 
@@ -28,6 +28,13 @@ const obtenerMaterias = async (req,res)=>{
     }
     
 
+}
+
+const obtenerMaterias = async (req,res)=>{
+    const materia = await materias.find({})
+    if(!materia) return res.status(400).json({msg:'La carrera no tiene materias asignadas',status:1}) 
+
+    return res.json(materia)
 }
 
 const nuevaMateria = async(req,res)=>{
@@ -116,5 +123,6 @@ const eliminarMateria = async(req,res)=>{
 
 exports.eliminarMateria= eliminarMateria
 exports.editarMateria= editarMateria
-exports.obtenerMaterias= obtenerMaterias
+exports.obtenerMateriasCarrera= obtenerMateriasCarrera
 exports.nuevaMateria= nuevaMateria
+exports.obtenerMaterias = obtenerMaterias

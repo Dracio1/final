@@ -37,4 +37,5 @@ router.get('/materia/:materia',auth,promedioNotasMateria)
 
 router.get('/alumno/:alumno',auth,promedioNotasAlumno)
 
-exports.module = router
+
+module.exports = router

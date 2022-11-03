@@ -1,4 +1,3 @@
-const Persona = require('../models/Personas');
 const Usuario = require('../models/Usuarios');
 const Anuncio = require('../models/Anuncios');
 const { validationResult} = require('express-validator')

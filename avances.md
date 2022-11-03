@@ -38,3 +38,5 @@ correcciones en mensajes emitidos por los controladores
 correcciones en controladores, recibir paramentros enviados en la ruta
 02/11
 uso express-validator validationResult en los controladores
+03/11
+uso de las rutas en el programa principal
