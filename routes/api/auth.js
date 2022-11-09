@@ -39,18 +39,18 @@ async (req, res) => {
     if(!errors.isEmpty()){
         return res.status(400).json({errors :  errors.array()})
     }
-
+    
    //check user existence
     try {
         let user = await User.findOne({nick})
         if(!user){
-            return res.status(400).json({errors : [{msg: 'user not found'}] })  
+            return res.status(404).json({errors : [{msg: 'usuario no encontrado'}] })  
         }
         
-        const isMatch = await bcrypt.compare(password, user.usuario.password)
+        const isMatch = await bcrypt.compare(password, user.password)
         
         if(!isMatch){ 
-            return res.status(400).json({errors : [{msg: 'las credenciales no son correctas'}] }) 
+            return res.status(403).json({errors : [{msg: 'las credenciales no son correctas'}] }) 
         }
 
         //return jsonwebtoken
@@ -74,6 +74,7 @@ async (req, res) => {
         res.json({msg:'datos correctos user creado', datos : req.body.name + req.body.email}) */
 
     } catch (error) {
+        console.log(error)
         res.status(500).json({msg:'server error',status:1})
     }
 
