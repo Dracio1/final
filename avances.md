@@ -43,3 +43,5 @@ uso de las rutas en el programa principal
 //hice otras cosas en la semana pero me olvide de anotar, correcciones de errores y pruebas desde react native
 13/11
 primera implementacion de redux
+15/11
+se agregaron reducers para carreras, materias y anuncios
