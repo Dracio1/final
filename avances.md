@@ -40,3 +40,6 @@ correcciones en controladores, recibir paramentros enviados en la ruta
 uso express-validator validationResult en los controladores
 03/11
 uso de las rutas en el programa principal
+//hice otras cosas en la semana pero me olvide de anotar, correcciones de errores y pruebas desde react native
+13/11
+primera implementacion de redux

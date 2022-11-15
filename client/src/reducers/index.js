@@ -9,5 +9,12 @@ export default combineReducers({
     alert,
     auth,
     profile,
-    post
+    post,
+    anuncios,
+    asistencia,
+    carreras,    
+    materias,
+    notas,
+    personas,
+    usuarios
 })
