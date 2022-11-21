@@ -8,9 +8,17 @@ const  bcrypt = require('bcryptjs')
 
 const User = require('../../models/Usuarios');
 
-const {editarPersona} = require('../../controladores/controlPersona')
+const {editarPersona, obtenerPersona} = require('../../controladores/controlPersona')
 
-router.put('/:id',auth, editarPersona)
+router.get('/:idPersonas',auth,obtenerPersona)
+
+router.put('/:idPersonas',[auth,
+    [check('nombres','Los nombres son obligatorios').not().isEmpty().trim().escape(),
+    check('apellidos','Los apellidos son obligatorios').not().isEmpty().trim().escape(),
+    check('direccion','La dirección es obligatoria').not().isEmpty().trim().escape(),
+    check('telefonos','Los telefonos son obligatorios').not().isEmpty(),
+    check('email','El correo electrónico no es correcto').isEmail(),
+    check('documentos','Los documentos son obligatorios').not().isEmpty()]], editarPersona)
 
 
 module.exports = router

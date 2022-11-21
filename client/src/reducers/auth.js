@@ -18,12 +18,14 @@ export default function(state = initialState, action){
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS: 
             localStorage.setItem('token', payload.token)
+            
             return {
-                ...state,
-                ...payload,
+                token: payload.token,
+                user: payload.user,
                 isAuthenticated: true,
                 loading: false
-            }    
+            }
+            break;
         case AUTH_ERROR:  
         case LOGIN_FAIL:  
         case REGISTER_FAIL:
@@ -31,17 +33,19 @@ export default function(state = initialState, action){
         case DELETE_ACCOUNT:         
             localStorage.removeItem('token')
             return {
-                ...state,
+                user:null,
                 token: null,
                 isAuthenticated: false,
                 loading: false
             }
+            break;
         case USER_LOADED:
             return {
                 isAuthenticated: true,
                 loading: false,
                 user: payload
             }
+            break;
         default:
             return state        
     }

@@ -14,7 +14,7 @@ const {obtenerCarreras,nuevaCarrera,editarCarrera,eliminarCarrera} = require('..
 //@route POST api/posts
 //desc: create post
 //@private
-router.get('/',  auth, obtenerCarreras)
+router.get('/',  obtenerCarreras)
 
 
 router.post('/', [ auth, [

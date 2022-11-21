@@ -57,7 +57,9 @@ async (req, res) => {
         
         const payload = {
             user : {
-                id: user.id
+                _id: user.id,
+                persona: user.persona,
+                tipo: user.tipo
             }
         }
 
@@ -67,7 +69,8 @@ async (req, res) => {
             {expiresIn: 3600},
             (err, token) => {
                 if(err) throw err
-                res.json({token})
+                console.log(token)
+                res.json({token,user:payload.user})
             })
        
         /* console.log('user created')

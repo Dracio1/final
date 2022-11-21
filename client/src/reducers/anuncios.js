@@ -12,7 +12,7 @@ import {
 
 const inicialState= {
     anuncios:[]
-    ,anuncio: {}
+    ,anuncio: null
     ,loading: true
     ,errors: {}
 }
@@ -38,8 +38,8 @@ export default function (state = inicialState, action){
         case CLEAR_ANUNCIO:
             return {
                 ...state
-                ,anuncio: {},
-                loading:false
+                ,anuncio: null
+                ,loading:false
             }
            
         case ANUNCIOS_ERROR:

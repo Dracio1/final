@@ -1,10 +1,10 @@
 import axios from 'axios'
 import { REGISTER_FAIL, REGISTER_SUCCESS, 
     USER_LOADED, AUTH_ERROR, 
-    LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, CLEAR_PROFILE } from "./types";
+    LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, CLEAR_PROFILE, CLEAR_PERSONAS } from "./types";
 import { setAlert } from "./alert";
 import setAuthToken from '../utils/setAuthToken'
-
+import { getPersona } from './personas';
 
 //REGISTER USER
 export const register = ({ nick, nombres, apellidos, email, password }) => async dispatch => {
@@ -21,7 +21,7 @@ export const register = ({ nick, nombres, apellidos, email, password }) => async
 
     try {
         const res = await axios.post('/back/api/users', body, config)
-
+        getPersona(res.data.user.persona)
         dispatch({
             type: REGISTER_SUCCESS,
             payload: res.data
@@ -57,18 +57,17 @@ export const login = (nick, password) => async dispatch => {
 
     try {
         const res = await axios.post('/back/api/auth', body, config)
-
-        console.log(res.data)
-
+        
+        dispatch(getPersona(res.data.user.persona))
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
         })
 
-        dispatch(loadUser())
+       // dispatch(loadUser())
         
     } catch (err) {
-
+        //console.log(err)
         const errors = err.response.data.errors
 
         if(errors){
@@ -105,5 +104,5 @@ export const loadUser = () => async dispatch => {
 
 export const logout = () => dispatch => {
    dispatch({type : LOGOUT }) 
-   dispatch({type: CLEAR_PROFILE})
+   dispatch({type: CLEAR_PERSONAS})
 }

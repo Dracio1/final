@@ -64,6 +64,8 @@ export default function (state = inicialState, action){
                 ,carreras: [payload,...state.carreras]
                 ,loading:false
             }
+       
+
 
         default:
             return state;

@@ -17,6 +17,9 @@ import Profiles from './components/profiles/Profiles'
 import Profile from './components/profile/Profile'
 import Posts from './components/posts/Posts'
 import Post from './components/post/Post'
+import Carreras from './components/carreras/Carreras'
+import Anuncios from './components/anuncios/Anuncios';
+import Persona from './components/personas/Persona'
 
 //neum components
 import NeuLogin from './components/auth/NeuLogin'
@@ -51,16 +54,19 @@ const App = () =>  {
           <Alert/>
           <Switch>
             <Route exact path={"/login"} component={NeuLogin}/>
-            <Route exact path={"/profiles"} component={Profiles}/>
-            <Route exact path={"/profile/:id"} component={Profile}/>
+            <Route exact path={"/carreras"} component={Carreras}/>
+           { //<Route exact path={"/profile/:id"} component={Profile}/>
+           }
             <Route exact path={"/register"} component={Register}/>
             <PrivateRoute exact path={"/dashboard"} component={Dashboard}/>
+            <PrivateRoute exact path={"/persona"} component={Persona}/>
             <PrivateRoute exact path={"/create-profile"} component={CreateProfile}/>
             <PrivateRoute exact path={"/edit-profile"} component={EditProfile} />
             <PrivateRoute exact path={"/add-experience"} component={AddExperience} />
             <PrivateRoute exact path={"/add-education"} component={AddEducation} />
-            <PrivateRoute exact path={"/posts"} component={Posts} />
-            <PrivateRoute exact path={"/post/:id"} component={Post} />
+            <PrivateRoute exact path={"/anuncios"} component={Anuncios} />
+            {//<PrivateRoute exact path={"/post/:id"} component={Post} />
+            }
           </Switch>
         </section>
         

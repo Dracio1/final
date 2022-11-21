@@ -1,7 +1,7 @@
 import {
     GET_MATERIAS
     ,GET_MATERIA
-    ,CLEAR_MATERIA
+    ,CLEAR_MATERIAS
     ,MATERIAS_ERROR
     ,UPDATE_MATERIAS
     ,DELETE_MATERIAS
@@ -34,7 +34,7 @@ export default function (state = inicialState, action){
                 loading:false
             }
 
-        case CLEAR_MATERIA:
+        case CLEAR_MATERIAS:
             return {
                 ...state
                 ,materia: {},

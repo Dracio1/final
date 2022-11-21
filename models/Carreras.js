@@ -10,7 +10,8 @@ const CarreraSchema = new mongoose.Schema({
             ref: 'Materias'
         }},
     ]
-
+    ,duracion:{type:String,
+        required:true},
     
 })
 

@@ -45,3 +45,5 @@ uso de las rutas en el programa principal
 primera implementacion de redux
 15/11
 se agregaron reducers para carreras, materias y anuncios
+19-20-21/11
+creacion de modulos faltantes del front para interaccion con el usuario utilizando redux

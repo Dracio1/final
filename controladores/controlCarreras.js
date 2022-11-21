@@ -4,14 +4,9 @@ const { validationResult} = require('express-validator')
 const obtenerCarreras = async (req,res)=>{
 
     try{
-        const errores = validationResult(req)
+       const carreras = await Carreras.find({})
 
-        if(!errores){
-            return res.status(400).json({ msg: errores.msg });
-        }
-         const carreras = await Carreras.find()
-
-        if(!carreras) return res.send({mensaje:'Aun no existen carreras',status:1})
+        if(!carreras) return res.json({mensaje:'Aun no existen carreras',status:1})
 
         res.json(carreras)
     }catch(error){
@@ -43,7 +38,7 @@ const nuevaCarrera = async (req,res)=>{
     
         await carrera.save()
     
-        res.json({mensaje:'La carrera se creó correctamente'})
+        res.json(carrera)
 
     }catch(error){
         console.error(err.message)

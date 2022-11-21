@@ -10,23 +10,23 @@ const NeuNavbar = ({
    const authLinks = (
       <ul className="navbar-nav mb-2  ml-auto">
          <li className="nav-item active">   
-            <Link className="nav-link" to="/posts">
+            <Link className="nav-link" to="/anuncios">
             <i className="fa-solid fa-user-group"></i>
-               Publicaciones
+               Anuncios
             </Link>
          </li>
 
          <li className="nav-item active">   
-            <Link className="nav-link" to="/profiles">
+            <Link className="nav-link" to="/aulas">
             <i className="fa-solid fa-user-group"></i>
-               Devs
+               Aulas Virtuales
             </Link>
          </li>
 
          <li className="nav-item active mx-3">
             <Link className="nav-link" to="/dashboard">
             <i className="fa-solid fa-address-card"></i>{' '}
-               <span className="">Mi Panel</span>
+               <span className="">Mis Datos</span>
             </Link>
          </li>
          
@@ -42,9 +42,9 @@ const NeuNavbar = ({
   const guestLinks = (
       <ul className="navbar-nav  mb-2 mb-md-0 ml-auto">
          <li className="nav-item active">
-            <Link className="nav-link" to="/profiles">
+            <Link className="nav-link" to="/carreras">
             <i className="fa-solid fa-user-group"></i>{' '}
-               Conoce a la comunidad
+               Conoce a las ofertas académicas
             </Link>
          </li>
 
