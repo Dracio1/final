@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import {useEffect} from 'react'
 import { connect }from 'react-redux'
+import { Link } from 'react-router-dom';
 import { getMaterias } from '../../actions/materias';
 import Spinner from "../layout/Spinner";
 import MateriasItem from './MateriasItem';
@@ -21,6 +22,7 @@ const Materias = ({getMaterias, materias: {materias, loading}}) => {
             loading ? <Spinner/> 
                 : 
             <>
+                <Link to='/materias/addMaterias'></Link>
                 <h1 className='text-primary'>Lista de Materias del instituto</h1>
                 
 

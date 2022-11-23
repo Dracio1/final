@@ -10,7 +10,7 @@ import {
 
 const inicialState= {
     materias:[]
-    ,materia: {}
+    ,materia: null
     ,loading: true
     ,errors: {}
 }
@@ -37,8 +37,8 @@ export default function (state = inicialState, action){
         case CLEAR_MATERIAS:
             return {
                 ...state
-                ,materia: {},
-                loading:false
+                ,materia: null
+                ,loading:false
             }
            
         case MATERIAS_ERROR:

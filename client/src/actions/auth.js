@@ -27,7 +27,7 @@ export const register = ({ nick, nombres, apellidos, email, password }) => async
             payload: res.data
         })
 
-        dispatch(loadUser())
+        //dispatch(loadUser())
 
     } catch (err) {
 

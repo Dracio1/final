@@ -20,6 +20,8 @@ import Post from './components/post/Post'
 import Carreras from './components/carreras/Carreras'
 import Anuncios from './components/anuncios/Anuncios';
 import Persona from './components/personas/Persona'
+import AddCarrera from './components/carreras/AddCarrera'
+import AddMaterias from './components/materias/AddMaterias'
 
 //neum components
 import NeuLogin from './components/auth/NeuLogin'
@@ -59,13 +61,16 @@ const App = () =>  {
            }
             <Route exact path={"/register"} component={Register}/>
             <PrivateRoute exact path={"/dashboard"} component={Dashboard}/>
+            <PrivateRoute exact path={"/carrera/add-carrera"} component={AddCarrera}/>
             <PrivateRoute exact path={"/persona"} component={Persona}/>
             <PrivateRoute exact path={"/create-profile"} component={CreateProfile}/>
             <PrivateRoute exact path={"/edit-profile"} component={EditProfile} />
             <PrivateRoute exact path={"/add-experience"} component={AddExperience} />
             <PrivateRoute exact path={"/add-education"} component={AddEducation} />
+            <PrivateRoute exact path={"/materias/addMaterias"} component={AddMaterias} />
             <PrivateRoute exact path={"/anuncios"} component={Anuncios} />
             {//<PrivateRoute exact path={"/post/:id"} component={Post} />
+
             }
           </Switch>
         </section>
@@ -74,5 +79,5 @@ const App = () =>  {
     </Provider>
   )
 }
-
+//<PrivateRoute exact path={"/persona"} component={Persona}/>
 export default App

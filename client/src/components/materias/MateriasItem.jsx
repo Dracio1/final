@@ -32,7 +32,7 @@ const MateriasItem = ({
 
 
 
-CarrerasItem.propTypes = {
+MateriasItem.propTypes = {
     materias: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
 }

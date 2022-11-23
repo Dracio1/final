@@ -25,11 +25,11 @@ const editarPersona = async (req,res)=>{
 
     try{
         const errores = validationResult(req)
-
+        
         if(!errores){
             return res.status(400).json({ msg: errores.msg });
         }
-
+        
         const {nombres,apellidos,direccion,email,asistencia,estado,telefonos,documentos} = {...req.body}
 
         const persona = await Persona.findById(req.params.idPersonas)
@@ -50,7 +50,7 @@ const editarPersona = async (req,res)=>{
         return res.send({mensaje:'Se guardaron los cambios'})
 
     }catch(error){
-            
+        console.log(error)
         return res.status(500).json({ msg:'server error'})
     }
 }

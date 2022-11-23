@@ -59,7 +59,7 @@ export const updatePersona = ({idPersona,nombres,apellidos,direccion,email,estad
     try {
         const body = JSON.stringify({nombres,apellidos,direccion,email,estado,telefonos,documentos})
         
-        const res = await axios.post(`/back/api/personas/${idPersona}`, body, config)
+        const res = await axios.put(`/back/api/personas/${idPersona}`, body, config)
     
         dispatch(setAlert('Persona actualizada', 'success'))
             

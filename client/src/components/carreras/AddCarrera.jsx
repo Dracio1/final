@@ -7,7 +7,7 @@ import EnviarVolver from '../layout/EnviarVolver';
 import { getMaterias } from '../../actions/materias';
 
 
-const AddCarrera = ({ addCarrera,getMaterias, history, materias:{materias, loading}, user: {tipo} }) => {
+const AddCarrera = ({ addCarrera,getMaterias, history, mats:{mats, loading}, user: {tipo} }) => {
     
     useEffect(() => {
         
@@ -15,7 +15,7 @@ const AddCarrera = ({ addCarrera,getMaterias, history, materias:{materias, loadi
       
     }, [getCarreras])
 
-    const listaMaterias = materias;
+   
     const [formData, setFormData] = useState({
         nombre: '',
         materias: '',
@@ -69,8 +69,8 @@ const AddCarrera = ({ addCarrera,getMaterias, history, materias:{materias, loadi
 
         <div className="centeredColumn">
           
-          <select name="materias">
-            {listaMaterias.map((materia)=>{return <option value={materia._id}>{materia.nombre}</option>})}
+          <select name="materias" onChange={(e)=>onChange(e)}>
+            {mats.map((materia)=>{return <option value={materia._id}>{materia.nombre}</option>})}
           </select>
 
         </div>
@@ -90,7 +90,7 @@ AddCarrera.propTypes = {
     getMaterias: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
-    materias : state.materias,
+    mats : state.materias,
     user: state.auth.user
 })
 export default connect(mapStateToProps,{ addCarrera, getMaterias })(AddCarrera);

@@ -39,14 +39,15 @@ export default function(state = initialState, action){
                 loading: false
             }
             break;
-        case USER_LOADED:
-            return {
-                isAuthenticated: true,
-                loading: false,
-                user: payload
-            }
-            break;
+        
         default:
             return state        
     }
 }
+//case USER_LOADED:
+//            return {
+//                isAuthenticated: true,
+//                loading: false,
+//                user: payload
+//            }
+//            break;

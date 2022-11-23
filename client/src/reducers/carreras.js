@@ -10,7 +10,7 @@ import {
 
 const inicialState= {
     carreras:[]
-    ,carrera: {}
+    ,carrera: null
     ,loading: true
     ,errors: {}
 }
@@ -37,8 +37,8 @@ export default function (state = inicialState, action){
         case CLEAR_CARRERA:
             return {
                 ...state
-                ,carrera: {},
-                loading:false
+                ,carrera: null
+                ,loading:false
             }
            
         case CARRERAS_ERROR:
