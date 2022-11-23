@@ -2,20 +2,17 @@ import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Spinner from '../layout/Spinner'
-import {getAllProfiles} from '../../actions/profile'
-import ProfileItem from './ProfileItem'
-import ProfileCard from '../layout/ProfileCard'
 
 
 
 
-const Profiles = ({ getAllProfiles, profile: { profiles, loading }}) => {
+const Aulas = ({ getAulas, profile: { profiles, loading }}) => {
 
     const [typeView, setTypeView] = useState(true) 
   
     useEffect(() => {
-      getAllProfiles()
-     
+      
+      getAulas()
     }, [])
      
 
@@ -96,12 +93,12 @@ const Profiles = ({ getAllProfiles, profile: { profiles, loading }}) => {
   )
 }
 
-Profiles.propTypes = {
-    getAllProfiles: PropTypes.func.isRequired,
+Aulas.propTypes = {
+  getAulas: PropTypes.func.isRequired,
     profile: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
     profile: state.profile
 })
-export default connect(mapStateToProps, {getAllProfiles})(Profiles)
+export default connect(mapStateToProps, {getAulas})(Aulas)

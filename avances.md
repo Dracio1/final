@@ -47,3 +47,5 @@ primera implementacion de redux
 se agregaron reducers para carreras, materias y anuncios
 19-20-21/11
 creacion de modulos faltantes del front para interaccion con el usuario utilizando redux
+23/11
+agregar materias, agregar Carreras, editar datos personales

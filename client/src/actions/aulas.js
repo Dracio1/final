@@ -6,10 +6,9 @@ const urlTemp = 'http://localhost:5000'
 
 
 //get all profiles
-export const getAllProfiles = () => async dispatch => {
+export const getAulas = () => async dispatch => {
     
-    dispatch({type: CLEAR_PROFILE})
-    dispatch({type: CLEAR_REPOS})
+    
 
     try {
         
